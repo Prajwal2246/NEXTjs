@@ -1,7 +1,7 @@
 import User from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 interface SignUpInputs {
   username: string;
@@ -68,4 +68,12 @@ const signup = async ({ username, email, password }: SignUpInputs) => {
   return userObj;
 };
 
-export default { signup, login };
+const logout = async () => {
+  const response = NextResponse.json({
+    message: "logout success",
+  });
+  response.cookies.delete("token");
+  return response;
+};
+
+export default { signup, login, logout };
