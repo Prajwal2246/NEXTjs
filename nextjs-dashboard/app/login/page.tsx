@@ -1,14 +1,29 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  const onLogin = () => {};
+  const onLogin = async () => {
+    try {
+      //call api
+      const res = await axios.post("/api/users/login", user);
+      console.log("login sucess: ", res);
+      toast.success("login sucessfull");
+      router.push("/profile");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   return (
     <div>
       <h2>Login page</h2>
